@@ -22,7 +22,7 @@ function randomizeLogo() {
 		var scale = Math.sin(arc);
 		var shear = Math.cos(arc) / (2 * scale);
 		$(value).attr('stroke', "none");
-		$(value).attr('transform', 'matrix(1,0,' + shear + ',' + scale + ',0,87.5) translate(50 -87.5)');
+		$(value).attr('transform', 'matrix(1,0,' + shear + ',' + scale + ',0,87.5) translate(32 -87.5)');
 	});
 }
 
