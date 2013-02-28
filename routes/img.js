@@ -11,7 +11,7 @@ fs.readFile('data/panacee.svg', function(err, xml) {
 		scripts : ['http://code.jquery.com/jquery-1.6.min.js']
 	}, function(err, window) {
 		$ = window.jQuery;
-		$('g').attr('transform', 'translate(50 0)');
+		$('g').attr('transform', 'translate(32 0)');
 	});
 });
 
