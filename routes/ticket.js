@@ -28,14 +28,17 @@ exports.index = function(req, res) {
 	var data = {
 		date : "Jeudi 18 juillet 2013",
 		time : "15h30",
-		hello : "Bonjour " + req.params.name,
+		hello : "Bonjour ",
 		context : "Hier soir, dans <em>Delayed</em>, de Matthias Gommel, une femme a dit ceci:",
 		what : "«C’est comme à la maison, tu me laisses jamais finir mes phrases».",
 		where : "Salle 2 - <em>Delayed</em>, Matthias Gommel (2002)"
 
 	};
+	if(moment().dayOfYear(1).year(0).isAfter(sunset))
+		data.hello = "Bonsoir ";
 	data.date = moment().format("dddd D MMMM YYYY");
-	data.time = moment().format("HH:mm");
+	data.time = moment().format("HH[h]mm");
+	data.hello += (req.params.name?req.params.name:" A. Nonyme")
 	res.render('ticket', data);
 };
 

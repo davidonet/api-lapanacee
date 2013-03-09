@@ -28,6 +28,7 @@ app.configure('development', function() {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/ticket/:name', ticket.index);
+app.get('/ticket', ticket.index);
 app.get('/update',ticket.updateDaylight);
 app.get('/logo.svg', img.logo_svg);
 app.get('/logo.png', img.logo_png);
