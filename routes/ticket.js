@@ -34,7 +34,7 @@ exports.index = function(req, res) {
 		where : "Salle 2 - <em>Delayed</em>, Matthias Gommel (2002)"
 
 	};
-	if ((moment().dayOfYear(1).year(0).isAfter(sunset)) && (moment().dayOfYear(1).year(0).isAfter(surise)))
+	if ((moment().dayOfYear(1).year(0).isAfter(sunset)) && (moment().dayOfYear(1).year(0).isAfter(sunrise)))
 		data.hello = "Bonsoir ";
 	data.date = moment().format("dddd D MMMM YYYY");
 	data.time = moment().format("HH[h]mm");
