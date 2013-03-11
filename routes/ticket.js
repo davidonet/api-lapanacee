@@ -8,7 +8,7 @@ sunset = moment("18:00", "HH:mm");
 exports.updateDaylight = function(req, res) {
 	http.get({
 		host : "www.earthtools.org",
-		path : "/sun/43.612809/3.878124/" + moment().date() + "/" + (moment().month() + 1) + "/1/1"
+		path : "/sun/43.612809/3.878124/" + moment().date() + "/" + (moment().month() + 1) + "/99/0"
 	}).on('response', function(response) {
 		response.setEncoding('utf8');
 		response.on('data', function(data) {
@@ -34,11 +34,11 @@ exports.index = function(req, res) {
 		where : "Salle 2 - <em>Delayed</em>, Matthias Gommel (2002)"
 
 	};
-	if(moment().dayOfYear(1).year(0).isAfter(sunset))
+	if ((moment().dayOfYear(1).year(0).isAfter(sunset)) && (moment().dayOfYear(1).year(0).isAfter(before)))
 		data.hello = "Bonsoir ";
 	data.date = moment().format("dddd D MMMM YYYY");
 	data.time = moment().format("HH[h]mm");
-	data.hello += (req.params.name?req.params.name:" A. Nonyme")
+	data.hello += (req.params.name ? req.params.name : " A. Nonyme")
 	res.render('ticket', data);
 };
 
