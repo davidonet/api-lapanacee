@@ -42,3 +42,44 @@ exports.index = function(req, res) {
 	res.render('ticket', data);
 };
 
+var phantom = require('node-phantom');
+var childProcess = require('child_process');
+var querystring = require("querystring");
+
+exports.submit = function(req, res) {
+	phantom.create(function(err, ph) {
+		ph.createPage(function(err, page) {
+			var url = "http://localhost:5090/ticket/" + encodeURIComponent(req.body.name);
+			page.open(url, function() {
+				page.viewportSize = {
+					width : 640,
+					height : 800
+				};
+
+				page.render('/tmp/ticket.png');
+				setTimeout(function() {
+					ph.exit();
+					var conProc = childProcess.exec('convert /tmp/ticket.png -black-threshold 0% /tmp/ticket_th.png', function(error, stdout, stderr) {
+						if (error) {
+							console.log(error.stack);
+							console.log('Error code: ' + error.code);
+							console.log('Signal received: ' + error.signal);
+						}
+					});
+					conProc.on('exit', function(code) {
+						
+						childProcess.exec('lpr -P CUSTOM-Engineering-VK80 /tmp/ticket_th.png', function(error, stdout, stderr) {
+							if (error) {
+								console.log(error.stack);
+								console.log('Error code: ' + error.code);
+								console.log('Signal received: ' + error.signal);
+							}
+						});
+					});
+
+					res.redirect('/');
+				}, 200);
+			});
+		});
+	});
+};
