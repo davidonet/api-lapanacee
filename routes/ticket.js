@@ -57,9 +57,10 @@ exports.submit = function(req, res) {
 				};
 
 				page.render('/tmp/ticket.png');
+				res.redirect('/');
 				setTimeout(function() {
 					ph.exit();
-					var conProc = childProcess.exec('convert /tmp/ticket.png -black-threshold 0% /tmp/ticket_th.png', function(error, stdout, stderr) {
+					var conProc = childProcess.exec('convert /tmp/ticket.png -scale 600x -black-threshold 70% -depth 1 /tmp/ticket_th.png', function(error, stdout, stderr) {
 						if (error) {
 							console.log(error.stack);
 							console.log('Error code: ' + error.code);
@@ -68,7 +69,7 @@ exports.submit = function(req, res) {
 					});
 					conProc.on('exit', function(code) {
 						
-						childProcess.exec('lpr -o ppi=220 /tmp/ticket_th.png', function(error, stdout, stderr) {
+						childProcess.exec('lpr -o ppi=200 /tmp/ticket_th.png', function(error, stdout, stderr) {
 							if (error) {
 								console.log(error.stack);
 								console.log('Error code: ' + error.code);
@@ -76,9 +77,8 @@ exports.submit = function(req, res) {
 							}
 						});
 					});
-
-					res.redirect('/');
 				}, 200);
+				
 			});
 		});
 	});
