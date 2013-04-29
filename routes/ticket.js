@@ -68,7 +68,7 @@ exports.submit = function(req, res) {
 					});
 					conProc.on('exit', function(code) {
 						
-						childProcess.exec('lpr -P CUSTOM-Engineering-VK80 /tmp/ticket_th.png', function(error, stdout, stderr) {
+						childProcess.exec('lpr -o ppi=220 /tmp/ticket_th.png', function(error, stdout, stderr) {
 							if (error) {
 								console.log(error.stack);
 								console.log('Error code: ' + error.code);
