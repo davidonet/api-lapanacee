@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-var express = require('express'), routes = require('./routes'), user = require('./routes/user'), img = require('./routes/img'), ticket = require('./routes/ticket'), http = require('http'), path = require('path');
+var express = require('express'), routes = require('./routes'), img = require('./routes/img'),http = require('http'), path = require('path');
 
 var app = express();
 
@@ -26,12 +26,8 @@ app.configure('development', function() {
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
-app.get('/ticket/:name', ticket.index);
-app.get('/ticket', ticket.index);
-app.get('/update',ticket.updateDaylight);
-app.get('/logo.svg', img.logo_svg);
-app.get('/logo.png', img.logo_png);
+app.get('/pan/logo.svg', img.logo_svg);
+app.get('/pan/logo.png', img.logo_png);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));
