@@ -1,6 +1,6 @@
 {
 	"name": "APILaPanacee",
-	"version": "0.0.1",
+	"version": "0.0.1-1",
 	"private": true,
 	"scripts": {
 		"start": "node api.js"
@@ -11,7 +11,13 @@
 		"less-middleware": "*",
 		"jsdom": "*",
 		"imagemagick": "*",
-		"moment":"*",
-		"xml2js":"*"
+		"moment": "*",
+		"xml2js": "*",
+		"mongoskin":"*",
+		"moment":"*"
+	},
+	"subdomain": "davidonet-api-lapanacee",
+	"engines": {
+		"node": "0.8.x"
 	}
 }
