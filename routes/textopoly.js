@@ -19,8 +19,13 @@ function updateMB(fn) {
 		var aT;
 		for (var aIdx = 0; aIdx < txts.length; aIdx++) {
 			aT = txts[aIdx];
-			var aP = Math.floor(50+Math.random()*aT.t.length);
-			if ((aT.t[aP] != aT.t[aP-1]) || (aT.t[aP] != aT.t[aP-2]) || (aT.t[aP] != aT.t[aP-3]) || (aT.t[aP] != aT.t[aP-4])) {
+			var parts = aT.t.split(' ');
+			var longestWord = 0;
+			for (var i = 0; i < parts.length; i++)
+				if (parts[i].length > longestWord)
+					longestWord = parts[i].length;
+			console.log(longestWord);
+			if (longestWord < 20) {
 				db.txt.update({
 					p : aT.p
 				}, {
@@ -51,7 +56,7 @@ exports.pickTxt = function(req, res) {
 		mb : true
 	}, function(err, txt) {
 		txt.skip(startIdx);
-		startIdx = Math.floor(Math.random()*tCount);
+		startIdx = Math.floor(Math.random() * tCount);
 		txt.toArray(function(err, result) {
 			var aT = result[1];
 			aT.mt = moment(aT.d).fromNow();
