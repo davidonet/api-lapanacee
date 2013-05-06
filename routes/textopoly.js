@@ -51,7 +51,7 @@ exports.pickTxt = function(req, res) {
 		mb : true
 	}, function(err, txt) {
 		txt.skip(startIdx);
-		startIdx = (startIdx + 1) % tCount;
+		startIdx = Math.floor(Math.random()*tCount);
 		txt.toArray(function(err, result) {
 			var aT = result[1];
 			aT.mt = moment(aT.d).fromNow();
