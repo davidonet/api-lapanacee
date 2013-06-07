@@ -11,6 +11,13 @@ var startIdx = 0;
 var tCount = 0;
 
 function updateMB(fn) {
+	db.txt.update({
+		'mb' : true
+	}, {
+		$unset : {
+			'mb' : 1
+		}
+	}, false, true);
 	db.txt.find({
 		$where : "this.t && this.t.length > 100 && this.t.length<300"
 	}).toArray(function(err, txts) {
@@ -24,7 +31,6 @@ function updateMB(fn) {
 			for (var i = 0; i < parts.length; i++)
 				if (parts[i].length > longestWord)
 					longestWord = parts[i].length;
-			console.log(longestWord);
 			if (longestWord < 20) {
 				db.txt.update({
 					p : aT.p
