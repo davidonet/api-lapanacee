@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Ticket</title>
+
+        <!-- Import Cubism and its dependency D3 -->
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="js/cubism.v1.min.js"></script>
+        <style>
+									body {
+										font-family:"Helvetica Neue",Helvetica,sans-serif;
+										margin:30px auto;
+										width:1440px;
+										position:relative;
+									}
+									header {
+										font-weight:500;
+										padding:6px;
+									}
+									.group {
+										margin-bottom:1em;
+									}
+									.axis {
+										font:10px sans-serif;
+										position:fixed;
+										pointer-events:none;
+										z-index:2;
+									}
+									.axis text {
+										-webkit-transition:fill-opacity 250ms linear;
+									}
+									.axis path {
+										display:none;
+									}
+									.axis line {
+										stroke:#000;
+										shape-rendering:crispEdges;
+									}
+									.axis.top {
+										background-image:linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+										background-image:-o-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+										background-image:-moz-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+										background-image:-webkit-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+										background-image:-ms-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+										top:0px;
+										padding:0 0 24px 0;
+									}
+									.axis.bottom {
+										background-image:linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+										background-image:-o-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+										background-image:-moz-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+										background-image:-webkit-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+										background-image:-ms-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+										bottom:0px;
+										padding:24px 0 0 0;
+									}
+									.horizon {
+										border-bottom:solid 1px #000;
+										overflow:hidden;
+										position:relative;
+									}
+									:not(.horizon) + .horizon {
+										border-top:solid 1px #000;
+									}
+									.horizon canvas {
+										display:block;
+									}
+									.horizon .title, .horizon .value {
+										bottom:0;
+										line-height:30px;
+										margin:0 6px;
+										position:absolute;
+										text-shadow:0 1px 0 rgba(255,255,255,.5);
+										white-space:nowrap;
+									}
+									.horizon .title {
+										left:0;
+									}
+									.horizon .value {
+										right:0;
+									}
+									.line {
+										background:#000;
+										z-index:1;
+									}
+									#step {
+										position:fixed;
+										bottom:6px;
+										z-index:3;
+									}
+									@media all and(max-width:1439px) {
+										body {
+											margin:0px auto;
+										}
+										.axis {
+											position:static;
+										}
+										.axis.top, .axis.bottom {
+											padding:0;
+										}
+									}
+        </style>
+    </head>
+    <body>
+        <div id="demo"></div>
+        <script type="text/javascript">
+			// Your beautiful Cubism code will go here
+			var context = cubism.context(), cube = context.cube("http://log.bype.org:1081");
+
+			d3.select("body").selectAll(".axis").data(["top"]).enter().append("div").attr("class", function(d) {
+				return d + " axis";
+			}).each(function(d) {
+				d3.select(this).call(context.axis().ticks(24).orient(d));
+
+			});
+			d3.select("body").insert("div", ".bottom").selectAll(".horizon").data(['ticket']).enter().append("div").attr("class", "horizon").call(context.horizon().metric(cube.metric("sum(ticketPanacee)")).height(25));
+
+			var socket = new WebSocket("ws://log.bype.org:1081/1.0/event/get");
+
+			socket.onopen = function() {
+				socket.send(JSON.stringify({
+					"expression" : "ticketPanacee(name)",
+					"start" : new Date()
+				}));
+				console.log("connected!");
+			};
+
+			socket.onmessage = function(message) {
+				var event = JSON.parse(message.data);
+				console.log("received", event.data.name);
+			};
+
+			socket.onclose = function() {
+				console.log("closed");
+			};
+
+			socket.onerror = function(error) {
+				console.log("error", error);
+			};
+
+        </script>
+    </body>
+</html>
