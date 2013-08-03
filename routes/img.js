@@ -8,10 +8,11 @@ fs.readFile('data/panacee.svg', function(err, xml) {
 		throw err;
 	jsdom.env({
 		html : xml,
-		scripts : ['http://code.jquery.com/jquery-1.6.min.js']
-	}, function(err, window) {
-		$ = window.jQuery;
-		$('g').attr('transform', 'translate(32 0)');
+		scripts : ['http://code.jquery.com/jquery-1.6.min.js'],
+		done : function(err, window) {
+			$ = window.jQuery;
+			$('g').attr('transform', 'translate(32 0)');
+		}
 	});
 });
 
