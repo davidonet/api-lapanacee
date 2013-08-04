@@ -106,7 +106,7 @@
         <div id="demo"></div>
         <script type="text/javascript">
 			// Your beautiful Cubism code will go here
-			var context = cubism.context(), cube = context.cube("http://log.bype.org:1081");
+			var context = cubism.context(), cube = context.cube("http://report.bype.org");
 
 			d3.select("body").selectAll(".axis").data(["top"]).enter().append("div").attr("class", function(d) {
 				return d + " axis";
@@ -116,7 +116,7 @@
 			});
 			d3.select("body").insert("div", ".bottom").selectAll(".horizon").data(['ticket']).enter().append("div").attr("class", "horizon").call(context.horizon().metric(cube.metric("sum(ticketPanacee)")).height(25));
 
-			var socket = new WebSocket("ws://log.bype.org:1081/1.0/event/get");
+			var socket = new WebSocket("ws://report.bype.org/1.0/event/get");
 
 			socket.onopen = function() {
 				socket.send(JSON.stringify({
