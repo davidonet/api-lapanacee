@@ -13,8 +13,9 @@
 		"imagemagick": "*",
 		"moment": "*",
 		"xml2js": "*",
-		"mongoskin":"*",
-		"moment":"*"
+		"mongoskin": "*",
+		"moment": "*",
+		"async": "*"
 	},
 	"subdomain": "davidonet-api-lapanacee",
 	"engines": {

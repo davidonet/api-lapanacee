@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-var express = require('express'), routes = require('./routes'), img = require('./routes/img'),textopoly = require('./routes/textopoly'),http = require('http'), path = require('path');
+var express = require('express'), routes = require('./routes'), img = require('./routes/img'),textopoly = require('./routes/textopoly'),http = require('http'), path = require('path'),ticket = require('./routes/ticket');
 
 var app = express();
 
@@ -30,6 +30,7 @@ app.get('/pan/logo.svg', img.logo_svg);
 app.get('/pan/logo.png', img.logo_png);
 app.get('/textopoly/updateMB', textopoly.updateMB);
 app.get('/textopoly/pickTxt', textopoly.pickTxt);
+app.get('/ticket/stat', ticket.stat);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));
