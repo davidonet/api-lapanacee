@@ -8,7 +8,7 @@ require(["jquery", "d3js"], function($, d3js) {
 	require(["cubism"], function(cubism) {
 		$.get('/ticket/stat', function(data) {
 
-			var svg = d3.select("body").append("svg").attr("width", 640).attr("height", 300);
+			var svg = d3.select("body").append("svg").attr("width", 640).attr("height", 300).attr('id','scatter');
 
 			var circles = svg.selectAll("circle").data(d3.merge(data.details)).enter().append("circle");
 			circles.attr("cx", function(d, i) {
