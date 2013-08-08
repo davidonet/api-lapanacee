@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-var express = require('express'), routes = require('./routes'), img = require('./routes/img'),textopoly = require('./routes/textopoly'),http = require('http'), path = require('path'),ticket = require('./routes/ticket');
+var express = require('express'), img = require('./routes/img'),textopoly = require('./routes/textopoly'),http = require('http'), path = require('path'),ticket = require('./routes/ticket');
 
 var app = express();
 
@@ -25,7 +25,6 @@ app.configure('development', function() {
 	app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
 app.get('/pan/logo.svg', img.logo_svg);
 app.get('/pan/logo.png', img.logo_png);
 app.get('/textopoly/updateMB', textopoly.updateMB);

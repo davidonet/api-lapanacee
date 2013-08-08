@@ -10,7 +10,7 @@ var db = mongo.db("mongodb://cloud.bype.org/lapanacee", {
 db.bind('tickets');
 
 var stat;
-exports.update = function(req, res) {
+var update = function(done) {
 	db.tickets.find({
 		time : {
 			$gt : new Date('2013-06-23')
@@ -40,7 +40,10 @@ exports.update = function(req, res) {
 
 			for (var d = 0; d < 7; d++) {
 				for (var h = 0; h < 24; h++)
-					details[d][h] = Math.floor(1000 * details[d][h] / sum);
+					if (100 < days[d])
+						details[d][h] = Math.floor(250 * details[d][h] / days[d]);
+					else
+						details[d][h] = 0;
 			}
 
 			stat = {
@@ -48,10 +51,15 @@ exports.update = function(req, res) {
 				days : days,
 				details : details
 			};
+			done();
+		});
+	});
+}
 
-			res.json({
-				success : true
-			});
+exports.update = function(req, res) {
+	update(function() {
+		res.json({
+			success : true
 		});
 	});
 }
@@ -59,3 +67,5 @@ exports.update = function(req, res) {
 exports.stat = function(req, res) {
 	res.json(stat);
 }
+update(function() {
+});
