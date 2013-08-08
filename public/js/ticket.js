@@ -20,7 +20,7 @@ require(["jquery", "d3js"], function($, d3js) {
 		socket.onmessage = function(message) {
 			var event = JSON.parse(message.data);
 			$('#lastname').text(event.data.name);
-			$('#logo').attr(src, 'http://api.lapan.ac/pan/logo.png');
+			$('#logo').attr('src', 'http://api.lapan.ac/pan/logo.png');
 
 		};
 
