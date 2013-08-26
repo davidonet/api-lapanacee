@@ -32,6 +32,8 @@ app.get('/textopoly/pickTxt', textopoly.pickTxt);
 app.get('/ticket/stat', ticket.stat);
 app.get('/ticket/update', ticket.update);
 
+
+
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));
 });

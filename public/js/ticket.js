@@ -36,6 +36,10 @@ require(["jquery", "d3js"], function($, d3js) {
 			$('#lastname').text(data[0].data.name);
 		});
 
+		$.get('http://report.bype.org/1.0/metric?expression=sum(ticketPanacee)&step=864e5&limit=1', function(data) {
+			$('#yesterday').text(data[0].value);
+		});
+
 		var step = +cubism.option("step", 1e4);
 		var context = cubism.context().step(step).size(960), cube = context.cube("http://report.bype.org");
 		$('body').append('<h1>Usage temps réel*</h1>');
@@ -52,9 +56,13 @@ require(["jquery", "d3js"], function($, d3js) {
 
 		$.get('/ticket/stat', function(data) {
 
+			$('#lastweek').text(data.week);
+			$('#month').text(data.month);
+			$('#begin').text(data.begin);
+
 			var svg = d3.select("body").append("svg").attr("width", 960).attr("height", 400).attr('id', 'scatter');
 
-			var circles = svg.selectAll("circle").data(d3.merge(data.details)).enter().append("circle");
+			var circles = svg.selectAll("circle").data(d3.merge(data.cumul.details)).enter().append("circle");
 			circles.attr("cx", function(d, i) {
 				return (i - 9) % 24 * 60;
 			}).attr("cy", function(d, i) {
@@ -74,7 +82,7 @@ require(["jquery", "d3js"], function($, d3js) {
 				return '#aaa';
 			});
 
-			svg.selectAll("text").data(data.days).enter().append("text").text(function(d, i) {
+			svg.selectAll("text").data(data.cumul.days).enter().append("text").text(function(d, i) {
 				switch(i) {
 					case 0:
 						return 'Mardi';
@@ -97,7 +105,7 @@ require(["jquery", "d3js"], function($, d3js) {
 				return (1 + i) * 45 + 6;
 			});
 
-			svg.selectAll("text").data(data.hours).enter().append("text").text(function(d, i) {
+			svg.selectAll("text").data(data.cumul.hours).enter().append("text").text(function(d, i) {
 				if ((i < 22) && (9 < i))
 					return i;
 				else
