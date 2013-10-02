@@ -8,7 +8,7 @@ fs.readFile('data/panacee.svg', function(err, xml) {
 		throw err;
 	jsdom.env({
 		html : xml,
-		scripts : ['http://code.jquery.com/jquery-1.6.min.js'],
+		scripts : ['http://code.jquery.com/jquery-1.10.2.min.js'],
 		done : function(err, window) {
 			$ = window.jQuery;
 			$('g').attr('transform', 'translate(32 0)');
@@ -32,7 +32,8 @@ exports.logo_svg = function(req, res) {
 	res.writeHead(200, {
 		"Content-Type" : "image/svg+xml"
 	});
-	res.end($('svg')[0].outerHTML);
+	res.end($('svg').parent().html());
+
 };
 
 var im = require('imagemagick');
