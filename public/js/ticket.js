@@ -49,7 +49,7 @@ require(["jquery", "d3js"], function($, d3js) {
 		};
 
 		setInterval(refreshCount, 10000);
-		setTimeout(refreshCount, 3);
+		setTimeout(refreshCount, 3000);
 
 		var step = +cubism.option("step", 1e4);
 		var context = cubism.context().step(step).size(960), cube = context.cube("http://report.bype.org");
