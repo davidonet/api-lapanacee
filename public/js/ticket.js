@@ -8,6 +8,7 @@ require(["jquery", "d3js"], function($, d3js) {
 	require(["cubism"], function(cub_ism) {
 
 		var socket = new WebSocket("ws://report.bype.org/1.0/event/get");
+		var monthcount = 0;
 
 		socket.onopen = function() {
 			socket.send(JSON.stringify({
@@ -40,6 +41,16 @@ require(["jquery", "d3js"], function($, d3js) {
 			$('#yesterday').text(data[0].value);
 		});
 
+		var refreshCount = function() {
+			$.get('http://report.bype.org/1.0/metric?expression=sum(ticketPanacee)&start=2013-10-04T07:00:00.000Z&stop=2013-10-04T22:00:00Z&step=864e5', function(data) {
+				$('#today').text(data[0].value);
+				$('#month').text(monthcount + data[0].value);
+			});
+		};
+
+		setInterval(refreshCount, 10000);
+		setTimeout(refreshCount, 3);
+
 		var step = +cubism.option("step", 1e4);
 		var context = cubism.context().step(step).size(960), cube = context.cube("http://report.bype.org");
 		$('body').append('<h1>Usage temps réel*</h1>');
@@ -58,6 +69,7 @@ require(["jquery", "d3js"], function($, d3js) {
 
 			$('#lastweek').text(data.week);
 			$('#month').text(data.month);
+			monthcount = data.month;
 			$('#begin').text(data.begin);
 
 			var svg = d3.select("body").append("svg").attr("width", 960).attr("height", 400).attr('id', 'scatter');
@@ -81,7 +93,6 @@ require(["jquery", "d3js"], function($, d3js) {
 					return '#D6C8A5'
 				return '#aaa';
 			});
-
 			svg.selectAll("text").data(data.cumul.days).enter().append("text").text(function(d, i) {
 				switch(i) {
 					case 0:
