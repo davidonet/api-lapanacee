@@ -41,8 +41,14 @@ require(["jquery", "d3js"], function($, d3js) {
 			$('#yesterday').text(data[0].value);
 		});
 
+		var dstart = new Date();
+		dstart.setHours(8);
+		var dend = new Date();
+		dend.setHours(23);
+
 		var refreshCount = function() {
-			$.get('http://report.bype.org/1.0/metric?expression=sum(ticketPanacee)&start=2013-10-04T07:00:00.000Z&stop=2013-10-04T22:00:00Z&step=864e5', function(data) {
+
+			$.get('http://report.bype.org/1.0/metric?expression=sum(ticketPanacee)&start=' + dstart.toISOString() + '&stop=' + dend.toISOString() + '&step=864e5', function(data) {
 				$('#today').text(data[0].value);
 				$('#month').text(monthcount + data[0].value);
 			});
