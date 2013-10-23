@@ -65,7 +65,7 @@ require(["jquery", "d3js"], function($, d3js) {
 		}).each(function(d) {
 			d3.select(this).call(context.axis().ticks(12).orient(d));
 		});
-		d3.select("body").insert("div", ".bottom").attr("class", "group").selectAll(".horizon").data(['ticketPanacee', 'laCabine']).enter().append("div").attr("class", "horizon").call(context.horizon().height(40).metric(function(d) {
+		d3.select("body").insert("div", ".bottom").attr("class", "group").selectAll(".horizon").data(['ticketPanacee']).enter().append("div").attr("class", "horizon").call(context.horizon().height(40).metric(function(d) {
 			return cube.metric("sum(" + d + ")").divide(1);
 		}));
 
