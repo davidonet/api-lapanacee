@@ -29,7 +29,6 @@ var update = function(done) {
 		month : function(callback) {
 			var d = new Date();
 			d.setDate(1);
-
 			db.tickets.find({
 				time : {
 					$gt : d
@@ -37,7 +36,11 @@ var update = function(done) {
 			}).count(callback);
 		},
 		begin : function(callback) {
-			db.tickets.find({}).count(callback);
+			db.tickets.find({
+				time : {
+					$gt : new Date('2013-06-23')
+				}
+			}).count(callback);
 		},
 		cumul : function(callback) {
 			db.tickets.find({
@@ -45,6 +48,7 @@ var update = function(done) {
 					$gt : new Date('2013-06-23')
 				}
 			}).toArray(function(err, tickets) {
+
 				var hours = [];
 				var days = [];
 				var details = [];
@@ -66,7 +70,6 @@ var update = function(done) {
 					sum++;
 					fn();
 				}, function() {
-
 					for (var d = 0; d < 7; d++) {
 						for (var h = 0; h < 24; h++)
 							if (100 < days[d])
@@ -86,16 +89,18 @@ var update = function(done) {
 		}
 	}, function(err, results) {
 		stat = results;
+		done(stat);
 	});
-}
+};
 
 exports.update = function(req, res) {
-	update(function() {
+	update(function(result) {
 		res.json({
-			success : true
+			success : true,
+			result : result
 		});
 	});
-}
+};
 
 exports.stat = function(req, res) {
 	res.json(stat);
