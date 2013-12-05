@@ -4,7 +4,6 @@
 
 var express = require('express'),
     img = require('./routes/img'),
-    textopoly = require('./routes/textopoly'),
     http = require('http'),
     path = require('path'),
     ticket = require('./routes/ticket');
@@ -32,8 +31,6 @@ app.configure('development', function () {
 
 app.get('/pan/logo.svg', img.logo_svg);
 app.get('/pan/logo.png', img.logo_png);
-app.get('/textopoly/updateMB', textopoly.updateMB);
-app.get('/textopoly/pickTxt', textopoly.pickTxt);
 app.get('/ticket/stat', ticket.stat);
 app.get('/ticket/update', ticket.update);
 

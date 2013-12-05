@@ -6,7 +6,7 @@ moment().lang('fr');
 //var cube = require('cube');
 //var emitter = cube.emitter("ws://log.bype.org:80");
 
-var db = mongo.db("mongodb://cloud.bype.org/lapanacee", {
+var db = mongo.db("mongodb://dbserver/lapanacee", {
 	safe : false
 })
 
